@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Security Terminal Portfolio</title>
+    <style>
+        body {
+            background-color: #0d0d0d;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        .terminal {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .output {
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .input-line {
+            display: flex;
+            align-items: center;
+        }
+        .prompt {
+            color: #00ccff;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        input {
+            background: transparent;
+            border: none;
+            color: #00ff66;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            outline: none;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="terminal">
+    <div class="output" id="output">🚀 === CYBER SECURITY INTERACTIVE TERMINAL v1.0 ===
+[SYSTEM STATUS: SECURED]
+Type 'help' to fetch the list of available commands.
+
+</div>
+    <div class="input-line">
+        <span class="prompt">sec-guest@root:~$</span>
+        <input type="text" id="commandInput" autofocus onkeydown="handleCommand(event)">
+    </div>
+</div>
+
+<script>
+    const outputDiv = document.getElementById('output');
+    const inputField = document.getElementById('commandInput');
+
+    function handleCommand(event) {
+        if (event.key === 'Enter') {
+            const rawInput = inputField.value;
+            const command = rawInput.trim().toLowerCase();
+            
+            // User ki type ki hui command screen par show hogi
+            outputDiv.innerHTML += `<span style="color:#00ccff; font-weight:bold;">sec-guest@root:~$</span> \${rawInput}\n`;
+            
+            let response = '';
+
+            if (command === 'help') {
+                response = `Available Commands:
+ ----------------------------------------------
+  📂 **about**    - Read my professional profile
+  🛡️ **skills**   - Check my Cybersecurity core skills
+  💻 **projects** - See what tech projects I'm working on
+  🧹 **clear**    - Wipe out the terminal screen`;
+            } else if (command === 'about') {
+                response = `PROFILE:
+ Cybersecurity enthusiast passionate about Information Security, Ethical Hacking, and building secure web architectures. Actively exploring Linux environments and digital forensics. Always keen to connect with professionals in the Infosec community.`;
+            } else if (command === 'skills') {
+                response = `SKILLS MATRIX:
+ [●] Linux Terminal & Basics
+ [●] Vulnerability Assessment Concepts
+ [●] Front-End Web Basics (HTML/CSS)
+ [●] Log Analysis & Network Security Foundations`;
+            } else if (command === 'projects') {
+                response = `CURRENT PROJECTS:
+ [1] This Interactive Web-based Linux Terminal (Built on mobile!)
+ [2] Working on Python-based basic network scanning automation tools.`;
+            } else if (command === 'clear') {
+                outputDiv.innerHTML = '';
+                inputField.value = '';
+                return;
+            } else if (command === '') {
+                response = '';
+            } else {
+                response = `Bash: command not found: '\${rawInput}'. Type 'help' to see what's allowed.`;
+            }
+
+            outputDiv.innerHTML += response + '\n\n';
+            inputField.value = '';
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    }
+</script>
+
+</body>
+</html>
