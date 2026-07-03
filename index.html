@@ -1,3 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cyber-Secure Terminal</title>
+    <style>
+        body { 
+            background-color: #000; 
+            color: #00ff66; 
+            font-family: 'Courier New', Courier, monospace; 
+            padding: 20px;
+            font-weight: bold; 
+        }
+        
+        body::before {
+            content: "💀";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            opacity: 0.1;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        #output { white-space: pre-wrap; font-size: 18px; }
+        #input-line { display: flex; font-size: 18px; margin-top: 10px; }
+        #prompt { margin-right: 10px; color: #ff0000; } 
+        input { 
+            background: transparent; 
+            border: none; 
+            color: #00ff66; 
+            font-family: 'Courier New', Courier, monospace; 
+            font-weight: bold;
+            outline: none; 
+            width: 100%; 
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="output">SYSTEM INITIALIZED... 💀
+Type 'help' to see active security tools.</div>
+
+<div id="input-line">
+    <span id="prompt">root@cyber:~#</span>
+    <input type="text" id="inputField" autofocus autocomplete="off">
+</div>
+
+<script>
+    const outputDiv = document.getElementById('output');
+    const inputField = document.getElementById('inputField');
+
+    inputField.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+            const rawInput = inputField.value;
+            const trimmed = rawInput.trim();
+            outputDiv.innerHTML += `\n<span style="color:#ff0000;">root@cyber:~#</span> ${rawInput}\n`;
+            
+            const parts = trimmed.split(' ');
+            const command = parts[0].toLowerCase();
+            const args = parts.slice(1).join(' ');
+            let response = '';
+
+            if (command === 'help') {
+                response = `
+[+] AVAILABLE SECURITY TOOLS:
+------------------------------------------------------------
+> check <password>   - Strength analysis
+> encrypt <text>     - Text-to-Cipher
+> decrypt <cipher>   - Cipher-to-Text
+> clear              - Purge terminal screen
+------------------------------------------------------------`;
+            } else if (command === 'check') {
+                if (!args) {
+                    response = "Usage: check <password>";
+                } else {
+                    let score = 0;
+                    if (args.length >= 8) score++;
+                    if (/[A-Z]/.test(args)) score++;
+                    if (/[a-z]/.test(args)) score++;
+                    if (/[0-9]/.test(args)) score++;
+                    if (/[^A-Za-z0-9]/.test(args)) score++;
+                    
+                    if (score <= 2) response = "STATUS: [WEAK] 🔴";
+                    else if (score <= 4) response = "STATUS: [MEDIUM] 🟡";
+                    else response = "STATUS: [STRONG] 🟢";
+                }
+            } else if (command === 'encrypt') {
+                response = args ? "🔐 Result: " + btoa(args) : "Usage: encrypt <text>";
+            } else if (command === 'decrypt') {
+                try { response = args ? "🔓 Result: " + atob(args) : "Usage: decrypt <encoded>"; }
+                catch(e) { response = "Error: Invalid encoded text!"; }
+            } else if (command === 'clear') {
+                outputDiv.innerHTML = '';
                 inputField.value = '';
                 return;
             } else if (command !== "") {
