@@ -1,161 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Security Terminal Portfolio</title>
+    <title>Cyber-Secure Terminal</title>
     <style>
-        body {
-            background-color: #0d0d0d;
-            color: #00ff66;
-            font-family: 'Courier New', Courier, monospace;
+        body { 
+            background-color: #000; 
+            color: #00ff66; 
+            font-family: 'Courier New', Courier, monospace; 
             padding: 20px;
-            margin: 0;
+            font-weight: bold; /* Text Bold */
         }
-        .terminal {
-            max-width: 800px;
-            margin: 0 auto;
+        
+        /* Background Skull Symbol */
+        body::before {
+            content: "💀";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 200px;
+            opacity: 0.1;
+            z-index: -1;
+            pointer-events: none;
         }
-        .output {
-            white-space: pre-wrap;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        .input-line {
-            display: flex;
-            align-items: center;
-        }
-        .prompt {
-            color: #00ccff;
-            margin-right: 10px;
+
+        #output { white-space: pre-wrap; font-size: 18px; }
+        #input-line { display: flex; font-size: 18px; margin-top: 10px; }
+        #prompt { margin-right: 10px; color: #ff0000; } /* Prompt red for hacker look */
+        input { 
+            background: transparent; 
+            border: none; 
+            color: #00ff66; 
+            font-family: 'Courier New', Courier, monospace; 
             font-weight: bold;
-        }
-        input {
-            background: transparent;
-            border: none;
-            color: #00ff66;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 16px;
-            outline: none;
-            flex-grow: 1;
+            outline: none; 
+            width: 100%; 
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
 
-<div class="terminal">
-    <div class="output" id="output">🚀 === CYBER SECURITY INTERACTIVE TERMINAL v1.0 ===
-[SYSTEM STATUS: SECURED]
-Type 'help' to fetch the list of available commands.
+<div id="output">SYSTEM INITIALIZED... 💀
+Type 'help' to see active security tools.</div>
 
-</div>
-    <div class="input-line">
-        <span class="prompt">sec-guest@root:~$</span>
-        <input type="text" id="commandInput" autofocus onkeydown="handleCommand(event)">
-    </div>
+<div id="input-line">
+    <span id="prompt">root@cyber:~#</span>
+    <input type="text" id="inputField" autofocus autocomplete="off">
 </div>
 
 <script>
     const outputDiv = document.getElementById('output');
-    const inputField = document.getElementById('commandInput');
+    const inputField = document.getElementById('inputField');
 
-    function handleCommand(event) {
+    inputField.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             const rawInput = inputField.value;
-            const command = rawInput.trim().toLowerCase();
+            const trimmed = rawInput.trim();
+            outputDiv.innerHTML += `\n<span style="color:#ff0000;">root@cyber:~#</span> ${rawInput}\n`;
             
-            // User ki type ki hui command screen par show hogi
-            outputDiv.innerHTML += `<span style="color:#00ccff; font-weight:bold;">sec-guest@root:~$</span> \${rawInput}\n`;
-            
+            const parts = trimmed.split(' ');
+            const command = parts[0].toLowerCase();
+            const args = parts.slice(1).join(' ');
             let response = '';
 
-                    if (command === 'help') {
-        response = `
-============================================================
-🤖 CYBER SECURITY TERMINAL - ACTIVE TOOLS MULTIPACK
-============================================================
-
-📌 AVAILABLE COMMANDS & TOOLS:
+            if (command === 'help') {
+                response = `
+[+] AVAILABLE SECURITY TOOLS:
 ------------------------------------------------------------
-[•] help            - Yeh help menu dekhne ke liye.
-[•] check <pwd>     - Password strength check karne ke liye.
-                      (Example: check My@Password123)
-[•] encrypt <text>  - Kisi message ko secret code mein badalne ke liye.
-                      (Example: encrypt HelloBhai)
-[•] decrypt <text>  - Encrypted code ko wapas normal text banane ke liye.
-                      (Example: decrypt KfoolYkfn)
-[•] clear           - Screen ko saaf karne ke liye.
-============================================================`;
-
-    }
-
-    } else if (command === 'check') {
-        if (!args) {
-            response = "❌ Error: Please provide a password. (Example: check Password123)";
-        } else {
-            const password = args;
-            let score = 0;
-            let feedback = [];
-
-            if (password.length >= 8) score++; else feedback.push("Kam se kam 8 characters ka use karein.");
-            if (/[A-Z]/.test(password)) score++; else feedback.push("Ek Capital letter (A-Z) jodein.");
-            if (/[a-z]/.test(password)) score++;
-            if (/[0-9]/.test(password)) score++; else feedback.push("Kam se kam ek number (0-9) use karein.");
-            if (/[^A-Za-z0-9]/.test(password)) score++; else feedback.push("Ek special character (@, #, $, etc.) jodein.");
-
-            response = `\n🔒 PASSWORD STRENGTH REPORT FOR: ${password}\n-----------------------------------------`;
-            if (score <= 2) {
-                response += `\n🔴 STATUS: WEAK (Yeh bohot jaldi hack ho sakta hai!)\n⚠️ SUGGESTIONS:\n- ${feedback.join('\n- ')}`;
-            } else if (score <= 4) {
-                response += `\n🟡 STATUS: MEDIUM (Theek hai, par aur secure kiya ja sakta hai!)\n⚠️ SUGGESTIONS:\n- ${feedback.join('\n- ')}`;
+> check <password>   - Strength analysis
+> encrypt <text>     - Text-to-Cipher
+> decrypt <cipher>   - Cipher-to-Text
+> clear              - Purge terminal screen
+------------------------------------------------------------`;
+            } else if (command === 'check') {
+                if (!args) response = "Usage: check <password>";
+                else {
+                    let score = (args.length >= 8) + /[A-Z]/.test(args) + /[0-9]/.test(args) + /[^A-Za-z0-9]/.test(args);
+                    response = score <= 2 ? "STATUS: [WEAK] 🔴" : (score <= 3 ? "STATUS: [MEDIUM] 🟡" : "STATUS: [STRONG] 🟢");
+                }
+            } else if (command === 'encrypt') {
+                response = args ? "🔐 Result: " + btoa(args) : "Usage: encrypt <text>";
+            } else if (command === 'decrypt') {
+                try { response = args ? "🔓 Result: " + atob(args) : "Usage: decrypt <encoded>"; }
+                catch(e) { response = "Error: Invalid encoded text!"; }
+            } else if (command === 'clear') {
+                outputDiv.innerHTML = '';
+                inputField.value = '';
+                return;
             } else {
-                response += `\n🟢 STATUS: STRONG (Ekdum majboot password hai! Hack karna mushkil hai.)`;
+                response = command ? "Command not found: " + command : "";
             }
-        }
 
-    } else if (command === 'encrypt') {
-        if (!args) {
-            response = "❌ Error: Please provide text to encrypt. (Example: encrypt SecretMessage)";
-        } else {
-            let encrypted = '';
-            for (let i = 0; i < args.length; i++) {
-                let charCode = args.charCodeAt(i);
-                encrypted += String.fromCharCode(charCode + 3);
-            }
-            response = `\n🔐 ENCRYPTED SUCCESSFULY:\nOriginal Text: ${args}\nSecret Code  : ${encrypted}\n\n💡 Tip: Is secret code ko wapas badalne ke liye 'decrypt [Secret Code]' type karein.`;
-        }
-
-    } else if (command === 'decrypt') {
-        if (!args) {
-            response = "❌ Error: Please provide encrypted text to decrypt. (Example: decrypt code)";
-        } else {
-            let decrypted = '';
-            for (let i = 0; i < args.length; i++) {
-                let charCode = args.charCodeAt(i);
-                decrypted += String.fromCharCode(charCode - 3);
-            }
-            response = `\n🔓 DECRYPTED SUCCESSFULLY:\nEncrypted Code: ${args}\nOriginal Text : ${decrypted}`;
-        }
-
-    } else if (command === 'clear') {
-        outputDiv.innerHTML = '';
-        inputField.value = '';
-        return;
-
-    } else if (command === '') {
-        response = '';
-    } else {
-        response = `Bash: command not found: ${command}. Type 'help' to see active security tools.`;
-    }
-
-
-            outputDiv.innerHTML += response + '\n\n';
+            outputDiv.innerHTML += response + '\n';
             inputField.value = '';
             window.scrollTo(0, document.body.scrollHeight);
         }
-    }
+    });
 </script>
 
 </body>
 </html>
-
