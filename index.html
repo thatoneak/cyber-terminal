@@ -74,11 +74,21 @@ Type 'help' to see active security tools.</div>
 > clear              - Purge terminal screen
 ------------------------------------------------------------`;
             } else if (command === 'check') {
-                if (!args) response = "Usage: check <password>";
-                else {
-                    let score = (args.length >= 8) + /[A-Z]/.test(args) + /[0-9]/.test(args) + /[^A-Za-z0-9]/.test(args);
-                    response = score <= 2 ? "STATUS: [WEAK] 🔴" : (score <= 3 ? "STATUS: [MEDIUM] 🟡" : "STATUS: [STRONG] 🟢");
+                if (!args) {
+                    response = "Usage: check <password>";
+                } else {
+                    let score = 0;
+                    if (args.length >= 8) score += 2;
+                    if (/[A-Z]/.test(args)) score += 2;
+                    if (/[a-z]/.test(args)) score += 1;
+                    if (/[0-9]/.test(args)) score += 2;
+                    if (/[^A-Za-z0-9]/.test(args)) score += 2;
+                    
+                    if (score <= 4) response = "STATUS: [WEAK] 🔴 (Score: " + score + ")";
+                    else if (score <= 7) response = "STATUS: [MEDIUM] 🟡 (Score: " + score + ")";
+                    else response = "STATUS: [STRONG] 🟢 (Score: " + score + ")";
                 }
+            
             } else if (command === 'encrypt') {
                 response = args ? "🔐 Result: " + btoa(args) : "Usage: encrypt <text>";
             } else if (command === 'decrypt') {
