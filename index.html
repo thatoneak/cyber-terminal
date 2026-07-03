@@ -69,35 +69,85 @@ Type 'help' to fetch the list of available commands.
             
             let response = '';
 
-            if (command === 'help') {
-                response = `Available Commands:
- ----------------------------------------------
-  📂 **about**    - Read my professional profile
-  🛡️ **skills**   - Check my Cybersecurity core skills
-  💻 **projects** - See what tech projects I'm working on
-  🧹 **clear**    - Wipe out the terminal screen`;
-            } else if (command === 'about') {
-                response = `PROFILE:
- Cybersecurity enthusiast passionate about Information Security, Ethical Hacking, and building secure web architectures. Actively exploring Linux environments and digital forensics. Always keen to connect with professionals in the Infosec community.`;
-            } else if (command === 'skills') {
-                response = `SKILLS MATRIX:
- [●] Linux Terminal & Basics
- [●] Vulnerability Assessment Concepts
- [●] Front-End Web Basics (HTML/CSS)
- [●] Log Analysis & Network Security Foundations`;
-            } else if (command === 'projects') {
-                response = `CURRENT PROJECTS:
- [1] This Interactive Web-based Linux Terminal (Built on mobile!)
- [2] Working on Python-based basic network scanning automation tools.`;
-            } else if (command === 'clear') {
-                outputDiv.innerHTML = '';
-                inputField.value = '';
-                return;
-            } else if (command === '') {
-                response = '';
+                if (command === 'help') {
+        response = `
+============================================================
+🤖 CYBER SECURITY TERMINAL - ACTIVE TOOLS MULTIPACK
+============================================================
+Puraane profile commands hata diye gaye hain. Ab aap niche diye 
+gaye real security tools ka use kar sakte hain:
+
+📌 AVAILABLE COMMANDS & TOOLS:
+------------------------------------------------------------
+[•] help            - Yeh help menu dekhne ke liye.
+[•] check <pwd>     - Password strength check karne ke liye.
+                      (Example: check My@Password123)
+[•] encrypt <text>  - Kisi message ko secret code mein badalne ke liye.
+                      (Example: encrypt HelloBhai)
+[•] decrypt <text>  - Encrypted code ko wapas normal text banane ke liye.
+                      (Example: decrypt KfoolYkfn)
+[•] clear           - Screen ko saaf karne ke liye.
+============================================================`;
+
+    } else if (command === 'check') {
+        if (!args) {
+            response = "❌ Error: Please provide a password. (Example: check Password123)";
+        } else {
+            const password = args;
+            let score = 0;
+            let feedback = [];
+
+            if (password.length >= 8) score++; else feedback.push("Kam se kam 8 characters ka use karein.");
+            if (/[A-Z]/.test(password)) score++; else feedback.push("Ek Capital letter (A-Z) jodein.");
+            if (/[a-z]/.test(password)) score++;
+            if (/[0-9]/.test(password)) score++; else feedback.push("Kam se kam ek number (0-9) use karein.");
+            if (/[^A-Za-z0-9]/.test(password)) score++; else feedback.push("Ek special character (@, #, $, etc.) jodein.");
+
+            response = `\n🔒 PASSWORD STRENGTH REPORT FOR: ${password}\n-----------------------------------------`;
+            if (score <= 2) {
+                response += `\n🔴 STATUS: WEAK (Yeh bohot jaldi hack ho sakta hai!)\n⚠️ SUGGESTIONS:\n- ${feedback.join('\n- ')}`;
+            } else if (score <= 4) {
+                response += `\n🟡 STATUS: MEDIUM (Theek hai, par aur secure kiya ja sakta hai!)\n⚠️ SUGGESTIONS:\n- ${feedback.join('\n- ')}`;
             } else {
-                response = `Bash: command not found: '\${rawInput}'. Type 'help' to see what's allowed.`;
+                response += `\n🟢 STATUS: STRONG (Ekdum majboot password hai! Hack karna mushkil hai.)`;
             }
+        }
+
+    } else if (command === 'encrypt') {
+        if (!args) {
+            response = "❌ Error: Please provide text to encrypt. (Example: encrypt SecretMessage)";
+        } else {
+            let encrypted = '';
+            for (let i = 0; i < args.length; i++) {
+                let charCode = args.charCodeAt(i);
+                encrypted += String.fromCharCode(charCode + 3);
+            }
+            response = `\n🔐 ENCRYPTED SUCCESSFULY:\nOriginal Text: ${args}\nSecret Code  : ${encrypted}\n\n💡 Tip: Is secret code ko wapas badalne ke liye 'decrypt [Secret Code]' type karein.`;
+        }
+
+    } else if (command === 'decrypt') {
+        if (!args) {
+            response = "❌ Error: Please provide encrypted text to decrypt. (Example: decrypt code)";
+        } else {
+            let decrypted = '';
+            for (let i = 0; i < args.length; i++) {
+                let charCode = args.charCodeAt(i);
+                decrypted += String.fromCharCode(charCode - 3);
+            }
+            response = `\n🔓 DECRYPTED SUCCESSFULLY:\nEncrypted Code: ${args}\nOriginal Text : ${decrypted}`;
+        }
+
+    } else if (command === 'clear') {
+        outputDiv.innerHTML = '';
+        inputField.value = '';
+        return;
+
+    } else if (command === '') {
+        response = '';
+    } else {
+        response = `Bash: command not found: ${command}. Type 'help' to see active security tools.`;
+    }
+
 
             outputDiv.innerHTML += response + '\n\n';
             inputField.value = '';
