@@ -73,7 +73,7 @@ Type 'help' to see active security tools.</div>
 > decrypt <cipher>   - Cipher-to-Text
 > clear              - Purge terminal screen
 ------------------------------------------------------------`;
-            } else if (command === 'check') {
+                        } else if (command === 'check') {
                 if (!args) {
                     response = "Usage: check <password>";
                 } else {
@@ -88,6 +88,7 @@ Type 'help' to see active security tools.</div>
                     else if (score <= 7) response = "STATUS: [MEDIUM] 🟡 (Score: " + score + ")";
                     else response = "STATUS: [STRONG] 🟢 (Score: " + score + ")";
                 }
+
             
             } else if (command === 'encrypt') {
                 response = args ? "🔐 Result: " + btoa(args) : "Usage: encrypt <text>";
