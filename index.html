@@ -69,13 +69,11 @@ Type 'help' to fetch the list of available commands.
             
             let response = '';
 
-                if (command === 'help') {
+                    if (command === 'help') {
         response = `
 ============================================================
 🤖 CYBER SECURITY TERMINAL - ACTIVE TOOLS MULTIPACK
 ============================================================
-Puraane profile commands hata diye gaye hain. Ab aap niche diye 
-gaye real security tools ka use kar sakte hain:
 
 📌 AVAILABLE COMMANDS & TOOLS:
 ------------------------------------------------------------
@@ -88,6 +86,8 @@ gaye real security tools ka use kar sakte hain:
                       (Example: decrypt KfoolYkfn)
 [•] clear           - Screen ko saaf karne ke liye.
 ============================================================`;
+
+    }
 
     } else if (command === 'check') {
         if (!args) {
