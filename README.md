@@ -1,27 +1,27 @@
 # 💀 Cyber Security Terminal
 
-Ek web-based interactive command-line interface (CLI) jo real-time security tools simulate karta hai. Yeh project pure **Vanilla HTML, CSS, aur JavaScript** se banaya gaya hai.
+A web-based interactive command-line interface (CLI) that simulates real-time security tools. This project is built using pure **Vanilla HTML, CSS, and JavaScript**.
 
 ### 🛠 Tech Stack
 *   **Frontend:** HTML5, CSS3
-*   **Logic:** Vanilla JavaScript (No libraries used)
+*   **Logic:** Vanilla JavaScript (No frameworks or external libraries used)
 *   **Deployment:** GitHub Pages
 
 ### 💻 Available Security Tools
-Jab aap terminal open karenge, toh `help` type karke ye tools use kar sakte hain:
+Once you open the terminal, type `help` to see the available commands:
 
-*   **`check <password>`**: Real-time password strength analyze karta hai (Weak, Medium, Strong).
-*   **`encrypt <text>`**: Text ko secret code mein badalta hai.
-*   **`decrypt <cipher>`**: Encrypted text ko wapas decode karta hai.
-*   **`clear`**: Terminal ki screen saaf karta hai.
+*   **`check <password>`**: Analyzes password strength in real-time (Weak, Medium, Strong).
+*   **`encrypt <text>`**: Encrypts your text into a cipher.
+*   **`decrypt <cipher>`**: Decodes the encrypted text back into its original form.
+*   **`clear`**: Clears the terminal screen.
 
 ### 🌐 Live Demo
-Aap ise yahan check kar sakte hain: [https://thatoneak.github.io/cyber-terminal/](https://thatoneak.github.io/cyber-terminal/)
+You can check out the live project here: [https://thatoneak.github.io/cyber-terminal/](https://thatoneak.github.io/cyber-terminal/)
 
 ### 🚀 Key Features
-*   **Manual CLI Engine:** Input handling aur dynamic response rendering ka pura logic khud likha hai.
-*   **Hacker-Theme UI:** Skull-themed background aur bold green typography ke sath professional terminal look.
-*   **Lightweight:** Bina kisi heavy framework ke fast performance.
+*   **Manual CLI Engine:** Custom input handling and dynamic response rendering logic built from scratch.
+*   **Hacker-Theme UI:** Skull-themed background with bold green typography for a professional terminal experience.
+*   **Lightweight:** Optimized for performance without any heavy framework dependencies.
 
 ---
 *Created by Anay Tiwari*
